@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mimir - The Knowledge AI Assistant</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #ffffff;
+            --accent-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --card-bg: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+
+            /* General adjustments */
+            body {
+                font-size: 14px;
+            }
+
+            /* Hero header */
+            .hero-header {
+                padding: 60px 20px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            /* Why Choose Mimir section */
+            .mimir-features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Feature card */
+            .feature-card {
+                flex-direction: column;
+            }
+
+            .showcase-demo,
+            .showcase-info {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            /* Mimir showcase */
+            .mimir-showcase-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* RAG card */
+            .rag-card {
+                flex-direction: column;
+            }
+
+            .rag-visual,
+            .rag-info {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .rag-process-list {
+                padding: 20px;
+            }
+
+            .rag-process-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+            }
+
+            .info-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <header>
+        <style>
+            .top-bar {
+                background-color: #0a0a0a;
+                padding: 15px 0;
+                text-align: center;
+            }
+
+            .logo {
+                color: #ffffff;
+                font-size: 1.5rem;
+                font-weight: bold;
+                display: inline-flex;
+                align-items: center;
+                text-decoration: none;
+            }
+
+            .rune-icon {
+                width: 24px;
+                height: 24px;
+                margin-right: 10px;
+                position: relative;
+            }
+
+            .rune-icon::before,
+            .rune-icon::after {
+                content: '';
+                position: absolute;
+                background-color: #4a90e2;
+            }
+
+            .rune-icon::before {
+                width: 2px;
+                height: 24px;
+                left: 11px;
+                transform: skew(-15deg);
+            }
+
+            .rune-icon::after {
+                width: 16px;
+                height: 2px;
+                top: 11px;
+                left: 4px;
+                transform: skew(-15deg);
+            }
+
+            .logo:hover .rune-icon::before,
+            .logo:hover .rune-icon::after {
+                background-color: #6aa8e8;
+            }
+        </style>
+
+        <div class="top-bar">
+            <a href="#" class="logo">
+                <div class="rune-icon"></div>
+                Mimir
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <style>
+            .hero-header {
+                background: linear-gradient(135deg, #2a0e61, #1e0510);
+                padding: 120px 20px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .hero-header::before,
+            .hero-header::after {
+                content: '';
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                border-radius: 50%;
+                filter: blur(100px);
+            }
+
+            .hero-header::before {
+                background: rgba(138, 43, 226, 0.4);
+                top: -100px;
+                left: -100px;
+            }
+
+            .hero-header::after {
+                background: rgba(65, 105, 225, 0.4);
+                bottom: -100px;
+                right: -100px;
+            }
+
+            .hero-content {
+                position: relative;
+                z-index: 1;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+                font-weight: 700;
+                color: #ffffff;
+                margin-bottom: 20px;
+                line-height: 1.2;
+            }
+
+            .highlight {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 30px;
+                padding: 5px 15px;
+                display: inline-block;
+            }
+
+            .highlight-icon {
+                display: inline-block;
+                margin-left: 5px;
+                vertical-align: middle;
+            }
+        </style>
+
+        <header class="hero-header">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Easily create the best<br>
+                    <span class="highlight">answers <svg class="highlight-icon" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg></span> experience<br>
+                    for your users
+                </h1>
+            </div>
+        </header>
+
+        <style>
+            .mimir-why-choose {
+                background-color: #0a0a0a;
+                padding: 80px 0;
+                color: #ffffff;
+            }
+
+            .mimir-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+
+            .mimir-section-title {
+                font-size: 2.5rem;
+                text-align: center;
+                margin-bottom: 50px;
+            }
+
+            .mimir-features-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+
+            .mimir-feature-card {
+                background-color: #1a1a1a;
+                border-radius: 10px;
+                padding: 20px;
+                display: flex;
+                align-items: flex-start;
+            }
+
+            .mimir-feature-icon {
+                font-size: 1.5rem;
+                color: #4a90e2;
+                margin-right: 15px;
+                flex-shrink: 0;
+            }
+
+            .mimir-feature-content {
+                flex: 1;
+            }
+
+            .mimir-feature-title {
+                font-size: 1rem;
+                margin-bottom: 5px;
+                color: #ffffff;
+                font-weight: bold;
+            }
+
+            .mimir-feature-description {
+                font-size: 0.8rem;
+                color: #a0a0a0;
+                line-height: 1.4;
+            }
+
+            .mimir-gradient-text {
+                background: linear-gradient(45deg, #4a90e2, #9b59b6);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                text-fill-color: transparent;
+            }
+
+            .mimir-minimal-footer {
+                background-color: #0a0a0a;
+                color: #ffffff;
+                padding: 20px 0;
+                text-align: center;
+                border-top: 1px solid #2a2a2a;
+            }
+
+            .mimir-footer-content {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .mimir-footer-logo {
+                display: flex;
+                align-items: center;
+                font-size: 1.2rem;
+                font-weight: bold;
+                text-decoration: none;
+                color: #ffffff;
+            }
+
+            .mimir-rune-icon {
+                width: 20px;
+                height: 20px;
+                margin-right: 8px;
+                position: relative;
+            }
+
+            .mimir-rune-icon::before {
+                content: '/';
+                position: absolute;
+                color: #4a90e2;
+                font-size: 1.5rem;
+                font-weight: bold;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(15deg);
+            }
+
+            .mimir-footer-logo:hover .mimir-rune-icon::before {
+                color: #6aa8e8;
+            }
+        </style>
+
+        <section class="mimir-why-choose">
+            <div class="mimir-container">
+                <h2 class="mimir-section-title">Why Choose <span class="mimir-gradient-text">Mimir</span></h2>
+                <div class="mimir-features-grid">
+                    <div class="mimir-feature-card">
+                        <div class="mimir-feature-icon">🧠</div>
+                        <div class="mimir-feature-content">
+                            <h3 class="mimir-feature-title">Advanced AI Technology</h3>
+                            <p class="mimir-feature-description">Leverage cutting-edge AI models and algorithms for
+                                unparalleled performance and accuracy.</p>
+                        </div>
+                    </div>
+                    <div class="mimir-feature-card">
+                        <div class="mimir-feature-icon">🔍</div>
+                        <div class="mimir-feature-content">
+                            <h3 class="mimir-feature-title">Powerful Search Capabilities</h3>
+                            <p class="mimir-feature-description">Combine vector, semantic, and full-text search for
+                                comprehensive and precise results.</p>
+                        </div>
+                    </div>
+                    <div class="mimir-feature-card">
+                        <div class="mimir-feature-icon">📊</div>
+                        <div class="mimir-feature-content">
+                            <h3 class="mimir-feature-title">Quality Assurance</h3>
+                            <p class="mimir-feature-description">Built-in monitoring and quality checks ensure reliable
+                                and trustworthy AI-generated content.</p>
+                        </div>
+                    </div>
+                    <div class="mimir-feature-card">
+                        <div class="mimir-feature-icon">🛠️</div>
+                        <div class="mimir-feature-content">
+                            <h3 class="mimir-feature-title">Developer-Friendly</h3>
+                            <p class="mimir-feature-description">Comprehensive SDKs and UI components for seamless
+                                integration and rapid development.</p>
+                        </div>
+                    </div>
+                    <div class="mimir-feature-card">
+                        <div class="mimir-feature-icon">🚀</div>
+                        <div class="mimir-feature-content">
+                            <h3 class="mimir-feature-title">Scalability</h3>
+                            <p class="mimir-feature-description">Designed to handle massive amounts of data and queries
+                                with optimal performance.</p>
+                        </div>
+                    </div>
+                    <div class="mimir-feature-card">
+                        <div class="mimir-feature-icon">🔐</div>
+                        <div class="mimir-feature-content">
+                            <h3 class="mimir-feature-title">Security & Compliance</h3>
+                            <p class="mimir-feature-description">Robust security measures and compliance with industry
+                                standards to protect your data.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            .feature-card-container {
+                max-width: 1200px;
+                margin: 60px auto;
+                padding: 0 20px;
+            }
+
+            .feature-card {
+                background-color: #1a1a1a;
+                border-radius: 16px;
+                padding: 40px;
+                color: #fff;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .showcase-demo {
+                flex: 1;
+                margin-right: 40px;
+            }
+
+            .demo-box {
+                background-color: #242424;
+                border-radius: 8px;
+                padding: 20px;
+            }
+
+            .demo-title {
+                font-size: 0.9rem;
+                color: #6a6a6a;
+                margin-bottom: 15px;
+            }
+
+            .feature-list {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .feature-item {
+                margin-bottom: 12px;
+                display: flex;
+                align-items: center;
+            }
+
+            .feature-icon {
+                margin-right: 10px;
+                font-size: 1.2em;
+            }
+
+            .showcase-info {
+                flex: 1;
+            }
+
+            .info-tag {
+                color: #4a90e2;
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .info-title {
+                font-size: 2rem;
+                margin-bottom: 20px;
+                line-height: 1.2;
+            }
+
+            .info-description {
+                font-size: 1rem;
+                color: #a0a0a0;
+                margin-bottom: 20px;
+                line-height: 1.6;
+            }
+
+            .info-button {
+                background-color: #4a90e2;
+                color: #fff;
+                padding: 12px 24px;
+                border-radius: 6px;
+                text-decoration: none;
+                display: inline-block;
+                transition: background-color 0.3s ease;
+                font-weight: bold;
+            }
+
+            .info-button:hover {
+                background-color: #3a7bc8;
+            }
+        </style>
+
+        <div class="feature-card-container">
+            <div class="feature-card">
+                <div class="showcase-demo">
+                    <div class="demo-box">
+                        <div class="demo-title">Mimir's Key Features</div>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">🧠</span>
+                                Flexible AI Model Selection
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">📄</span>
+                                Advanced PDF Parsing
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">🛠️</span>
+                                First-Level Support System
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">🔍</span>
+                                Enhanced RAG Algorithm
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="showcase-info">
+                    <div class="info-tag">Powerful AI Assistant</div>
+                    <h2 class="info-title">Unlock the Power of Norse Wisdom</h2>
+                    <p class="info-description">Mimir combines cutting-edge AI technology with the depth of ancient
+                        knowledge to provide unparalleled insights and assistance.</p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <style>
+            .mimir-showcase {
+                background: linear-gradient(135deg, #f6e5f5, #e5e5f6, #f5e5e5);
+                padding: 80px 0;
+            }
+
+            .mimir-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+
+            .mimir-showcase-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+            }
+
+            .mimir-showcase-card {
+                background-color: #1a1a1a;
+                border-radius: 15px;
+                padding: 25px;
+                color: #ffffff;
+                display: flex;
+                flex-direction: column;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .mimir-showcase-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .mimir-showcase-icon {
+                font-size: 2rem;
+                color: #4a90e2;
+                margin-bottom: 15px;
+            }
+
+            .mimir-showcase-title {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+                color: #ffffff;
+                font-weight: bold;
+            }
+
+            .mimir-showcase-description {
+                font-size: 0.9rem;
+                color: #a0a0a0;
+                margin-bottom: 15px;
+                flex-grow: 1;
+            }
+
+            .mimir-showcase-link {
+                color: #4a90e2;
+                text-decoration: none;
+                font-size: 0.9rem;
+                font-weight: bold;
+                align-self: flex-start;
+                padding: 5px 0;
+            }
+
+            .mimir-showcase-link:hover {
+                text-decoration: underline;
+            }
+        </style>
+
+        <section class="mimir-showcase">
+            <div class="mimir-container">
+                <div class="mimir-showcase-grid">
+                    <div class="mimir-showcase-card">
+                        <div class="mimir-showcase-icon">🏢</div>
+                        <h3 class="mimir-showcase-title">Company Knowledge Base</h3>
+                        <p class="mimir-showcase-description">Mimir powers an intelligent knowledge base for a Fortune
+                            500 company, enabling employees to quickly find accurate information across multiple
+                            departments.</p>
+                        <a href="#" class="mimir-showcase-link">See it in action &rarr;</a>
+                    </div>
+                    <div class="mimir-showcase-card">
+                        <div class="mimir-showcase-icon">🎫</div>
+                        <h3 class="mimir-showcase-title">IT Ticketing System</h3>
+                        <p class="mimir-showcase-description">A major tech firm uses Mimir to enhance their IT ticketing
+                            system, automating responses to common issues and reducing resolution times by 40%.</p>
+                        <a href="#" class="mimir-showcase-link">See it in action &rarr;</a>
+                    </div>
+                    <div class="mimir-showcase-card">
+                        <div class="mimir-showcase-icon">🤖</div>
+                        <h3 class="mimir-showcase-title">First-Layer Customer Support</h3>
+                        <p class="mimir-showcase-description">An e-commerce giant implements Mimir as their first-layer
+                            customer support, handling 70% of inquiries without human intervention.</p>
+                        <a href="#" class="mimir-showcase-link">See it in action &rarr;</a>
+                    </div>
+                    <div class="mimir-showcase-card">
+                        <div class="mimir-showcase-icon">🛒</div>
+                        <h3 class="mimir-showcase-title">E-commerce Product Assistant</h3>
+                        <p class="mimir-showcase-description">Mimir powers an AI shopping assistant for a leading online
+                            retailer, providing personalized product recommendations and answering customer queries in
+                            real-time.</p>
+                        <a href="#" class="mimir-showcase-link">See it in action &rarr;</a>
+                    </div>
+                    <div class="mimir-showcase-card">
+                        <div class="mimir-showcase-icon">📚</div>
+                        <h3 class="mimir-showcase-title">Legal Document Analysis</h3>
+                        <p class="mimir-showcase-description">A top law firm utilizes Mimir to quickly analyze vast
+                            amounts of legal documents, extracting key information and precedents for case preparation.
+                        </p>
+                        <a href="#" class="mimir-showcase-link">See it in action &rarr;</a>
+                    </div>
+                    <div class="mimir-showcase-card">
+                        <div class="mimir-showcase-icon">🏥</div>
+                        <h3 class="mimir-showcase-title">Healthcare Information Retrieval</h3>
+                        <p class="mimir-showcase-description">A hospital network implements Mimir to provide medical
+                            staff with instant access to patient histories, treatment protocols, and the latest research
+                            findings.</p>
+                        <a href="#" class="mimir-showcase-link">See it in action &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            .rag-card-container {
+                max-width: 1200px;
+                margin: 60px auto;
+                padding: 0 20px;
+                font-family: Arial, sans-serif;
+            }
+
+            .rag-card {
+                background-color: #1a1a1a;
+                border-radius: 16px;
+                padding: 40px;
+                color: #fff;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .rag-visual {
+                flex: 1;
+                margin-right: 40px;
+            }
+
+            .rag-process-list {
+                background-color: #242424;
+                border-radius: 8px;
+                padding: 30px;
+                list-style-type: none;
+            }
+
+            .rag-process-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #333;
+            }
+
+            .rag-process-item:last-child {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+
+            .rag-process-icon {
+                background-color: #4a90e2;
+                color: #fff;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 20px;
+                margin-right: 20px;
+                flex-shrink: 0;
+            }
+
+            .rag-process-text {
+                font-size: 14px;
+                line-height: 1.4;
+            }
+
+            .rag-process-step {
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #4a90e2;
+            }
+
+            .rag-info {
+                flex: 1;
+            }
+
+            .info-tag {
+                color: #4a90e2;
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .info-title {
+                font-size: 2rem;
+                margin-bottom: 20px;
+                line-height: 1.2;
+            }
+
+            .info-description {
+                font-size: 1rem;
+                color: #a0a0a0;
+                margin-bottom: 20px;
+                line-height: 1.6;
+            }
+
+            .feature-list {
+                list-style-type: none;
+                padding: 0;
+                margin-bottom: 20px;
+            }
+
+            .feature-item {
+                margin-bottom: 15px;
+                display: flex;
+                align-items: flex-start;
+            }
+
+            .feature-icon {
+                margin-right: 15px;
+                font-size: 1.5em;
+                color: #4a90e2;
+            }
+
+            .feature-text {
+                flex: 1;
+            }
+
+            .feature-title {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .info-button {
+                background-color: #4a90e2;
+                color: #fff;
+                padding: 12px 24px;
+                border-radius: 6px;
+                text-decoration: none;
+                display: inline-block;
+                transition: background-color 0.3s ease;
+                font-weight: bold;
+            }
+
+            .info-button:hover {
+                background-color: #3a7bc8;
+            }
+        </style>
+
+        <div class="rag-card-container">
+            <div class="rag-card">
+                <div class="rag-visual">
+                    <ul class="rag-process-list">
+                        <li class="rag-process-item">
+                            <div class="rag-process-icon">1</div>
+                            <div class="rag-process-text">
+                                <div class="rag-process-step">Data Ingestion</div>
+                                Your data is processed through NLP Chunking and indexed using BM25
+                            </div>
+                        </li>
+                        <li class="rag-process-item">
+                            <div class="rag-process-icon">2</div>
+                            <div class="rag-process-text">
+                                <div class="rag-process-step">Vector Transformation</div>
+                                Vector Embeddings are created and stored in Mimir Vector DB
+                            </div>
+                        </li>
+                        <li class="rag-process-item">
+                            <div class="rag-process-icon">3</div>
+                            <div class="rag-process-text">
+                                <div class="rag-process-step">Query Processing</div>
+                                User Query is analyzed by Mimir Query Engine
+                            </div>
+                        </li>
+                        <li class="rag-process-item">
+                            <div class="rag-process-icon">4</div>
+                            <div class="rag-process-text">
+                                <div class="rag-process-step">Multimodal Analysis</div>
+                                Advanced processing of various data types (text, images, etc.)
+                            </div>
+                        </li>
+                        <li class="rag-process-item">
+                            <div class="rag-process-icon">5</div>
+                            <div class="rag-process-text">
+                                <div class="rag-process-step">Answer Generation</div>
+                                Mimir Answer Engine synthesizes information
+                            </div>
+                        </li>
+                        <li class="rag-process-item">
+                            <div class="rag-process-icon">✓</div>
+                            <div class="rag-process-text">
+                                <div class="rag-process-step">Results Delivery</div>
+                                Accurate, Relevant Results are presented to the user
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="rag-info">
+                    <div class="info-tag">Advanced RAG Algorithm</div>
+                    <h2 class="info-title">Unleash the Power of Intelligent Information Retrieval</h2>
+                    <p class="info-description">Mimir's cutting-edge RAG (Retrieval-Augmented Generation) algorithm
+                        combines multiple techniques to provide unparalleled accuracy and relevance in information
+                        retrieval and generation.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">🔍</span>
+                            <div class="feature-text">
+                                <div class="feature-title">BM25 Algorithm</div>
+                                <div>Enhanced keyword-based relevance for precise information retrieval</div>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">🧠</span>
+                            <div class="feature-text">
+                                <div class="feature-title">Vector Search</div>
+                                <div>Advanced semantic understanding for context-aware results</div>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">🖼️</span>
+                            <div class="feature-text">
+                                <div class="feature-title">Multimodal Queries</div>
+                                <div>Support for text, images, and more for comprehensive information processing</div>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">⚡</span>
+                            <div class="feature-text">
+                                <div class="feature-title">High-Speed Processing</div>
+                                <div>Real-time results with optimized algorithms and efficient data structures</div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+        <footer class="mimir-minimal-footer">
+            <div class="mimir-footer-content">
+                <a href="#" class="mimir-footer-logo">
+                    <div class="mimir-rune-icon"></div>
+                    Mimir
+                </a>
+            </div>
+        </footer>
+
+</body>
+
+</html>
